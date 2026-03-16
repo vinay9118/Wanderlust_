@@ -5,6 +5,7 @@ An Airbnb-inspired marketplace to discover unique stays, list properties, and sh
 Visit [Wanderlust](https://wanderlust-04vi.onrender.com/listings)
 
 ✨ Features
+
 Discover & Explore: Browse a wide variety of unique accommodations globally.
 
 Host Properties: Authenticated users can easily create, edit, and delete their own property listings.
