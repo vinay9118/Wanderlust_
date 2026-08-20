@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV!="production"){
+if (process.env.NODE_ENV != "production") {
     require("dotenv").config();
 }
 
@@ -24,7 +24,7 @@ const userRouter = require("./routes/user.js");
 
 
 // const mongoose_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl=process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL;
 
 main().then(() => {
     console.log("Connected to db");
@@ -42,21 +42,21 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-const store=MongoStore.create({
-    mongoUrl:dbUrl,
-    crypto:{ 
-        secret:process.env.SECRET,
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET,
     },
-    touchAfter:24 * 3600,
+    touchAfter: 24 * 3600,
 });
 
-store.on("error",()=>{
+store.on("error", () => {
     console.log("ERROR in MONGO Session STORE")
 });
 
 const sessionOptions = {
     store,
-    secret:process.env.SECRET,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -87,7 +87,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser=req.user;
+    res.locals.currUser = req.user;
     next();
 });
 
@@ -103,7 +103,7 @@ app.use((req, res, next) => {
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-app.use("/",userRouter);
+app.use("/", userRouter);
 
 
 // Catch-all for undefined routes
@@ -119,6 +119,12 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(8080, () => {
-    console.log("localhost:");
+// app.listen(8080, () => {
+//     console.log("localhost:");
+// });
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
